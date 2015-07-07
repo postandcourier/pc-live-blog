@@ -1,0 +1,95 @@
+<head>
+  <title>live-blog</title>
+  <link rel="stylesheet" type="text/css" href="http://sites.eveningpostinteractive.com/carbon/stylesheets/app.css?ver=201412231408" />
+  <link rel="stylesheet" type="text/css" href="http://sites.eveningpostinteractive.com/carbon/fonts/clarendon/stylesheet.css" />
+  <script src="http://www.d3plus.org/js/d3.js"></script>
+  <script src="http://www.d3plus.org/js/d3plus.js"></script>
+</head>
+
+<body>
+</body>
+
+<template name="main">
+  <div class="row">
+    <header>
+      <h1>Live Blog</h1>
+      {{#if currentUser}}
+      <form class="new-post">
+        <input type="text" name="text" placeholder="Post headline" />
+        <label>Textarea Label
+          <textarea name="content" placeholder="Post content"></textarea>
+        </label>
+        
+        <label>Chart Data
+          <textarea name="chartData" placeholder="Post content"></textarea>
+        </label>
+        
+        <input type="submit" class="button small">
+      </form>
+      {{/if}}
+    </header>
+
+    <section>
+      <div class="row">
+        <div class="small-4 columns">
+        </div>
+        <div class="small-8 columns">
+          
+          {{#each posts}}
+            {{> post}}
+          {{/each}}
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
+<template name="post">
+  <div class="row">
+    <div class="small-4 columns">
+      <div id="{{_id}}"></div>
+      <script>
+        var barChart = d3plus.viz()
+          .type("bar")
+          .id("Response")
+          .x("Response")
+          .y({"range": [0,124],"lines":83, "value": "Value", "label": "Number Responding"})
+          .legend(false)
+          .font({ "family": "Open Sans" })
+          .color(function(d){
+            if (d.Response == "Yes") {
+              return "#2ECC40";
+            } else if (d.Response == "No") {
+              return "#FF851B";
+            } else if (d.Response == "Aye") {
+              return "#0074D9";
+            } else if (d.Response == "Nay") {
+              return "#FF4136";
+            } else {
+              return "#DDDDDD";
+            }
+          });
+        
+          barChart.container("#{{_id}}")
+          .data({{chartData}})
+          .draw();
+      </script>
+      {{#if currentUser}}
+        {{> editableText collection="Posts" field="chartData"}}
+      {{/if}}
+    </div>
+    <div class="small-8 columns">
+      <h2 class="text">{{text}}</h2>
+      <p>{{> editableText collection="Posts" field="content"}}</p>
+      {{#if currentUser}}
+        <button class="delete" style="float:right;">&times;</button>
+      {{/if}}
+    </div>
+  </div>
+</template>
+
+<template name="admin">
+  <div class="container">
+      {{> loginButtons}}
+  </div>
+</template>
