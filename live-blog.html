@@ -95,7 +95,7 @@
     
     <div class="{{#if chartData}}small-5 with-vote{{else}}small-10{{/if}} columns with-vote">
       {{#if chartData}}<h2 class="text">{{text}}</h2>{{else}}<h4 class="text">{{text}}</h4>{{/if}}
-      <p>{{> editableText collection="Posts" field="content" placeholder="New post" acceptEmpty=true textarea="true"}}</p>
+      <p>{{> editableText collection="Posts" field="content" placeholder="New post" wysiwyg=true acceptEmpty=true textarea="true"}}</p>
       
       {{#if currentUser}}
         <div class="chart-data-edit">

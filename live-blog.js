@@ -2,7 +2,7 @@ Posts = new Mongo.Collection("posts");
 Keys = new Mongo.Collection("keys");
 
 Accounts.config({
-  forbidClientAccountCreation : false
+  forbidClientAccountCreation : true
 });
 
 if (Meteor.isClient) {
