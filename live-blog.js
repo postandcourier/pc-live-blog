@@ -1,5 +1,16 @@
 Posts = new Mongo.Collection("posts");
 
+Posts.attachSchema(new SimpleSchema({
+  text: {
+    type: String,
+    label: "text"
+  },
+  content: {
+    type: String,
+    label: "content"
+  }
+}));
+
 Accounts.config({
   forbidClientAccountCreation : false
 });

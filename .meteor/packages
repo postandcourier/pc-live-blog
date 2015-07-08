@@ -9,3 +9,5 @@ accounts-ui
 accounts-password
 iron:router
 babrahams:editable-text
+aldeed:autoform
+aldeed:collection2
