@@ -184,6 +184,26 @@ if (Meteor.isServer) {
   });
   
   BrowserPolicy.framing.allowAll();
+  BrowserPolicy.content.allowInlineScripts();
+  BrowserPolicy.content.allowInlineStyles();
+  BrowserPolicy.content.allowEval();
+  
+  var trusted = [
+    '*.google-analytics.com',
+    '*.mxpnl.com',
+    '*.zendesk.com',
+    '*.postandcourier.com',
+    '*.eveningpostinteractive.com',
+    '*.d3plus.org',
+    'localhost:3000'
+  ];
+  
+  _.each(trusted, function(origin) {
+    origin = "http://" + origin;
+    BrowserPolicy.content.allowOriginForAll(origin);
+    BrowserPolicy.content.allowInlineScripts(origin);
+  });
+    
   
   Meteor.publish("keys", function() {
     return Keys.find();
