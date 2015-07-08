@@ -122,7 +122,7 @@ if (Meteor.isClient) {
         .axes({background:{color:"#f6f6f6",stroke:{color:"#fff",width:0}}})
         .x({value:"Response", grid:false, ticks: {width:0}, label:false})
         .y("Value")
-        .legend({value:true, size:[40,40]})
+        .legend(false)
         .labels({value:true, align: "left"})
         .font({ "family": "Open Sans" })
         .color(function(d){
