@@ -63,12 +63,14 @@
                 <input type="text" name="key" placeholder="Add event" />
               </form>
             {{/if}}
-            <ul class="key-timeline">
+            <ul class="key-timeline fa-ul">
               {{#each keys}}
                 {{> key}}
               {{/each}}
             </ul>
           </div>
+            <img src="http://data.postandcourier.com/assets/data-logo.png" style="max-width: 160px;">
+            <p><small>A Post and Courier Data Project</small></p>
         </div>
         <div class="small-12 medium-9 columns">
           
@@ -117,7 +119,8 @@
 
 <template name="key">
   <li>
-    <strong>{{timeStamp}}</strong><br>
+    <i class="fa-li fa fa-square"></i>
+    <strong>{{timeStamp}}</strong>
     {{#if currentUser}}{{> editableText collection="keys" field="text" placeholder="text" autoInsert="true" substitute='<div class="button tiny secondary">+ Key Event</div>' removeEmpty="true" textarea="true"}}
     {{else}}
       {{text}}
