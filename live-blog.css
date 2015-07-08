@@ -56,3 +56,8 @@
   padding-bottom: 3rem;
   padding-top: 0.5rem;
 }
+
+.grey-text {
+  font-size: 0.6rem;
+  color: #666;
+}
