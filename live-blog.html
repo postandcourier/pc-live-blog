@@ -98,7 +98,7 @@
     
     <div class="{{#if chartData}}small-5 with-vote{{else}}small-10{{/if}} columns with-vote">
       {{#if chartData}}<h2 class="text">{{text}}</h2>{{else}}<h4 class="text">{{text}}</h4>{{/if}}
-      <p>{{> editableText collection="Posts" field="content" placeholder="New post" wysiwyg=true acceptEmpty=true textarea="true"}}</p>
+      <p>{{#if currentUser}}{{> editableText collection="posts" field="content" placeholder="New post" wysiwyg=true acceptEmpty=true textarea="true"}}{{else}} {{{content}}} {{/if}}</p>
       
       {{#if currentUser}}
         <div class="chart-data-edit">
@@ -116,7 +116,10 @@
 <template name="key">
   <li>
     <strong>{{timeStamp}}</strong><br>
-    {{> editableText collection="keys" field="text" placeholder="text" autoInsert="true" substitute='<div class="button tiny secondary">+ Key Event</div>' acceptEmpty="true" textarea="true"}}
+    {{#if currentUser}}{{> editableText collection="keys" field="text" placeholder="text" autoInsert="true" substitute='<div class="button tiny secondary">+ Key Event</div>' acceptEmpty="true" textarea="true"}}
+    {{else}}
+      {{text}}
+    {{/if}}
   </li>
 </template>
 
