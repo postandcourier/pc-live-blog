@@ -58,9 +58,11 @@
         <div class="small-12 medium-3 columns">
           <div class="panel">
             <h5>Timeline</h5>
+            {{#if currentUser}}
               <form class="new-event">
                 <input type="text" name="key" placeholder="Add event" />
               </form>
+            {{/if}}
             <ul class="key-timeline">
               {{#each keys}}
                 {{> key}}
