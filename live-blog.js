@@ -48,7 +48,7 @@ if (Meteor.isClient) {
     timeStamp: function() {
       var data = Keys.findOne({_id:this._id});
       if(data){
-        return moment(data.createdAt).format("h:ma");
+        return moment(data.createdAt).format("h:mma");
       }
     }
   })
