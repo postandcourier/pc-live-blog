@@ -59,6 +59,9 @@
           <div class="panel">
             <h5>Timeline</h5>
             <ul class="key-timeline">
+              {{#if currentUser}}
+                {{> editableText collection="keys" field="text" placeholder="text" autoInsert="true" substitute='<div class="button tiny secondary">+ Key Event</div>' acceptEmpty="true" textarea="true"}}
+              {{/if}}
               {{#each keys}}
                 {{> key}}
               {{/each}}
@@ -106,9 +109,6 @@
         <button class="delete buttom tiny red-bkg delete-button">&times;</button>
       {{/if}}
       
-      {{#if currentUser}}
-        
-      {{/if}}
     </div>
   </div>
 </template>

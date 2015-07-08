@@ -183,6 +183,8 @@ if (Meteor.isServer) {
     // code to run on server at startup
   });
   
+  BrowserPolicy.framing.allowAll();
+  
   Meteor.publish("keys", function() {
     return Keys.find();
   });
