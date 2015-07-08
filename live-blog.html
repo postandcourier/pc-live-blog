@@ -31,9 +31,7 @@
 
     <section>
       <div class="row">
-        <div class="small-4 columns">
-        </div>
-        <div class="small-8 columns">
+        <div class="small-12 columns">
           
           {{#each posts}}
             {{> post}}
@@ -80,7 +78,7 @@
     </div>
     <div class="small-8 columns">
       <h2 class="text">{{text}}</h2>
-      <p>{{> editableText collection="Posts" field="content"}}</p>
+      <p>{{> editableText collection="Posts" field="content" placeholder="New post"}}</p>
       {{#if currentUser}}
         <button class="delete" style="float:right;">&times;</button>
       {{/if}}

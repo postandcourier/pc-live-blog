@@ -1,10 +1,12 @@
 Posts = new Mongo.Collection("posts");
 
 Accounts.config({
-  forbidClientAccountCreation : true
+  forbidClientAccountCreation : false
 });
 
 if (Meteor.isClient) {
+  
+  Meteor.subscribe("posts");
 
   Template.main.helpers({
     posts: function () {
@@ -18,14 +20,7 @@ if (Meteor.isClient) {
           content = event.target.content.value,
           chartData = event.target.chartData.value;
       
-      Posts.insert({
-        text: text,
-        content: content,
-        chartData: chartData,
-        createdAt: new Date(),
-        owner: Meteor.userId(),
-        username: Meteor.user().username
-      });
+      Meteor.call("addPost", text, content, chartData);
       
       // Clear Form
       event.target.text.value = "";
@@ -53,8 +48,35 @@ if (Meteor.isClient) {
   
 }
 
+Meteor.methods({
+  addPost: function(text, content, chartData) {
+    if (! Meteor.userId() ) {
+      throw new Meteor.Error("not-authorized");
+    }
+    
+    Posts.insert({
+      text: text,
+      content: content,
+      chartData: chartData,
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username
+    });
+  },
+  deletePost: function (postId) {
+    Posts.remove(postId);
+  },
+  editPost: function (postId, chartData) {
+    
+  }
+})
+
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+  });
+  
+  Meteor.publish("posts", function() {
+    return Posts.find();
   });
 }
