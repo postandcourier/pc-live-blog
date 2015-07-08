@@ -25,13 +25,13 @@ if (Meteor.isClient) {
       var text = "",
           content = "",
           chartData = "",
-          yMax = "",
-          dashNum = "",
+          yMax = 50,
+          dashNum = '',
       
       text = event.target.text.value;
       content = event.target.content.value;
       chartData = event.target.chartData.value;
-      yMax = event.target.yMax.value;
+      yMax = Number(event.target.yMax.value);
       dashNum = event.target.dashNum.value;
       
       Meteor.call("addPost", text, content, chartData, yMax, dashNum);
@@ -55,7 +55,7 @@ if (Meteor.isClient) {
   
   Template.post.events({
     "click .delete": function () {
-      Posts.remove(this._id);
+      Meteor.call("deletePost", this._id)
     }
   })
   
@@ -69,7 +69,7 @@ if (Meteor.isClient) {
     timeAgo: function() {
       var data = Posts.findOne({_id:this._id});
       if(data){
-        return moment(data.createdAt).fromNow().replace(/ minutes/, "m").replace(/ minute/, "m");
+        return moment(data.createdAt).fromNow().replace(/ minutes/, "m").replace(/ minute/, "m").replace(/am/, "1m");
       }
     }
   })
@@ -84,10 +84,10 @@ if (Meteor.isClient) {
       var barChart = d3plus.viz()
         .type("bar")
         .id("Response")
-        .background({color:"#fff", stroke:{color:"#fff",width:0}})
+        .background("#fff")
         .axes({background:{color:"#f6f6f6",stroke:{color:"#fff",width:0}}})
         .x({value:"Response", grid:false, ticks: {width:0}, label:false})
-        .y({"range": [0,124],"lines":83, "value": "Value", "label": false, grid:{color:"#fff"}, ticks:{size:0}})
+        .y("Value")
         .legend({value:true, size:[40,40]})
         .labels({value:true, align: "left"})
         .font({ "family": "Open Sans" })
@@ -112,14 +112,41 @@ if (Meteor.isClient) {
     Deps.autorun(function (tracker) {
       var reactiveChart = Posts.findOne({_id:nodeId});
       var parsedData = JSON.parse(reactiveChart.chartData);
+      var yMax = Number(reactiveChart.yMax);
+      var dashNum = Number(reactiveChart.dashNum);
       
-      if (barChart){
+      var barChart = d3plus.viz()
+        .type("bar")
+        .id("Response")
+        .background("#fff")
+        .axes({background:{color:"#f6f6f6",stroke:{color:"#fff",width:0}}})
+        .x({value:"Response", grid:false, ticks: {width:0}, label:false})
+        .y("Value")
+        .legend({value:true, size:[40,40]})
+        .labels({value:true, align: "left"})
+        .font({ "family": "Open Sans" })
+        .color(function(d){
+          if (d.Response == "Yes") {
+            return "#2ECC40";
+          } else if (d.Response == "No") {
+            return "#FF851B";
+          } else if (d.Response == "Aye") {
+            return "#0074D9";
+          } else if (d.Response == "Nay") {
+            return "#FF4136";
+          } else {
+            return "#DDDDDD";
+          }
+        });
+        
+        contStr = '#node_'+reactiveChart._id;
+        barChart.container(contStr);
         barChart.y({lines:false})
         
-        barChart.y({ "range": [0,reactiveChart.yMax],lines:{ value: reactiveChart.dashNum, dasharray: [5,5], width: 2 } })
+        barChart.y({ "range": [0,yMax],lines:{ value: dashNum, dasharray: [5,5], width: 2 }, grid:{color:"#fff"} })
         .data(parsedData)
         .draw();
-      }
+
     })
   }
   
