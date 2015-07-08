@@ -58,10 +58,10 @@
         <div class="small-12 medium-3 columns">
           <div class="panel">
             <h5>Timeline</h5>
+              <form class="new-event">
+                <input type="text" name="key" placeholder="Add event" />
+              </form>
             <ul class="key-timeline">
-              {{#if currentUser}}
-                {{> editableText collection="keys" field="text" placeholder="text" autoInsert="true" substitute='<div class="button tiny secondary">+ Key Event</div>' acceptEmpty="true" textarea="true"}}
-              {{/if}}
               {{#each keys}}
                 {{> key}}
               {{/each}}
@@ -116,7 +116,7 @@
 <template name="key">
   <li>
     <strong>{{timeStamp}}</strong><br>
-    {{#if currentUser}}{{> editableText collection="keys" field="text" placeholder="text" autoInsert="true" substitute='<div class="button tiny secondary">+ Key Event</div>' acceptEmpty="true" textarea="true"}}
+    {{#if currentUser}}{{> editableText collection="keys" field="text" placeholder="text" autoInsert="true" substitute='<div class="button tiny secondary">+ Key Event</div>' removeEmpty="true" textarea="true"}}
     {{else}}
       {{text}}
     {{/if}}

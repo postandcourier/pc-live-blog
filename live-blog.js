@@ -38,9 +38,20 @@ if (Meteor.isClient) {
       
       // Clear Form
       event.target.text.value = "";
+      event.target.content.value = "";
+      event.target.chartData.value = "";
+      event.target.yMax.value = "";
+      event.target.dashNum.value = "";
       
       return false;
       
+    },
+    "submit .new-event": function (event) {
+      var key = event.target.key.value;
+      
+      Meteor.call("addEvent", key);
+      
+      event.target.key.value = "";
     }
   })
   
@@ -170,11 +181,19 @@ Meteor.methods({
       username: Meteor.user().username
     });
   },
+  addEvent: function(key) {
+    
+    Keys.insert({
+      text: key,
+      createdAt: new Date(),
+      owner: Meteor.userId(),
+      username: Meteor.user().username
+    });
+  },
   deletePost: function (postId) {
     Posts.remove(postId);
   },
   editPost: function (postId, chartData) {
-    
   }
 })
 
