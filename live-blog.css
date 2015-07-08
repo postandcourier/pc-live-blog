@@ -1,0 +1,47 @@
+.text-area-edit{
+  min-height: 150px;
+}
+
+.d3plus_graph_xgrid line {
+  stroke: #fff;
+  
+}
+
+.chart-data-edit span{
+  display: block;
+  padding: 0.5rem 0;
+  color:#999;
+  font-style: italic;
+  clear: right;
+}
+
+.chart-data-edit i{
+  float: left;
+  clear: left;
+  margin-top: 8px;
+  margin-right: 6px;
+  color: #444;
+}
+
+.main-post-panel{
+  position: relative;
+}
+
+.delete-button {
+  position: absolute;
+  right:0;
+  top: 0;
+}
+
+.red-bkg {
+  background: #FF4136;
+}
+
+.time-ago{
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.main-post-panel {
+  border-top: 4px solid #0074D9;
+}
